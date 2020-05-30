@@ -1,3 +1,4 @@
+let lastFocusedWindowId = null;
 chrome.commands.onCommand.addListener(function (command)
 {
     if (command === 'togglemeister-toggle')
@@ -6,16 +7,28 @@ chrome.commands.onCommand.addListener(function (command)
         {
             if (!win.focused)
             {
-                chrome.windows.getCurrent({}, function (win)
+                chrome.windows.getAll({}, function (windows)
                 {
-                    chrome.windows.update(win.id, {focused: true}, function () { });
+                    windows.forEach(function (window)
+                    {
+                        if (!lastFocusedWindowId || window.id !== lastFocusedWindowId)
+                            chrome.windows.update(window.id, {focused: true}, function (win) { })
+                    });
+                    if (lastFocusedWindowId)
+                        chrome.windows.update(lastFocusedWindowId, {focused: true}, function (win) { });
                 });
             }
             else
             {
-                chrome.windows.getCurrent({}, function (win)
+                chrome.windows.getAll({}, function (windows)
                 {
-                    chrome.windows.update(win.id, {state: 'minimized'}, function () { });
+                    windows.forEach(function (window)
+                    {
+                        if (window.focused)
+                            lastFocusedWindowId = window.id;
+
+                        chrome.windows.update(window.id, {state: 'minimized'}, function (win) { })
+                    });
                 });
             }
         });

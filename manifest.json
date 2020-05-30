@@ -2,9 +2,9 @@
   "default_locale": "en",
   "name": "Togglemeister Chrome Hotkey",
   "description": "__MSG_app_desc__",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "permissions": [],
-  "version": "0.0.1",
+  "version": "0.0.3",
   "icons": {
     "128": "img/128.png",
     "48": "img/48.png",
@@ -20,7 +20,7 @@
         "mac": "Command+Shift+Q",
         "linux": "Alt+Q"
       },
-      "description": "Toggle Chrome Visibility"
+      "description": "Toggle Browser Visibility"
     }
   }
 }
